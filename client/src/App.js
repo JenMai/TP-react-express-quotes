@@ -17,6 +17,13 @@ class App extends Component {
         });
     }
 
+    async insertQuote(quote){
+        const quotes = (await axios.post('http://localhost:8081/quote')).data;
+        this.setState({
+            quotes
+        });
+    }
+
     handleSubmit(e) {
         e.preventDefault();
         if (!this.state.newMessage) return;
@@ -37,14 +44,13 @@ class App extends Component {
     }
 
     render() {
+        if (!this.state.quotes) {
+            return (<p>loading data....</p>)
+        }
         return (
             <div>
                 <ul>
-                    {this.state.quotes.map(
-                        (q, i) => <Quotation key={i}
-                                             {...q}
-                                             removeQuote={() => this.removeQuote(i)}/>)
-                    }
+                    {this.state.quotes.map(q => <Quotation key={q._id} {...q} removeQuote= {()=>removeQuote(q._id)}/>)}
                 </ul>
                 <hr/>
                 <Form handleSubmit={e => this.handleSubmit(e)} handleNewQuote={e => this.handleNewQuote(e)}/>

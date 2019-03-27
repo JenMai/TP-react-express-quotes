@@ -6,6 +6,18 @@ const quotes = [
     {id:idx++,message: "You talkin' to me?", author: "Travis Bickle"}
 ];
 
-exports.getQuotes = (id) =>{
+exports.getQuotes = () =>{
+    return quotes;
+};
+
+exports.getQuote = (id) =>{
     return quotes.find(q=>q.id===+id);
 };
+
+exports.insertQuote = (quote) => {
+    quotes.push(quote)
+}
+
+exports.removeQuote = (quote) => {
+    quotes.filter(q => q._id !== quote._id);
+}

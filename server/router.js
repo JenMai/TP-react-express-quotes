@@ -10,8 +10,21 @@ router
     .use(bodyParser.urlencoded({
         extended: true
     }))
+
+    .get("/quotes", (req, res) => {
+        res.json(Quotes.getQuotes());
+    })
+
     .get("/quotes/:id", (req, res) => {
         res.json(Quotes.getQuotes(req.params.id));
+    })
+    .post("/quote", (req, res) => {
+        Quotes.insertQuotes(req.body);
+        res.json(Quotes.getQuotes());
+    })
+    .delete("/quotes/:id", (req, res) => {
+        Quotes.removeQuote(req.body);
+        res.json(Quotes.getQuotes());
     })
     .use((req, res) => {
         res.status(400);
