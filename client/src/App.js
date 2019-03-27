@@ -1,21 +1,20 @@
 import React, {Component} from 'react';
 
-
-let quotations = [
-    {message: "Elementary, my dear Watson", author: "Sherlock Holmes"},
-    {message: 'I think therefore I am', author: "Rene Descartes"},
-    {message: 'Life is like riding a bicycle. To keep your balance, you must keep moving', author: "Albert Einstein"},
-    {message: "You talkin' to me?", author: "Travis Bickle"}
-];
-
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            quotes: quotations,
+            quotes: [],
             newMessage: "",
             newAuthor: "",
         };
+    }
+
+    async componentDidMount(){
+        const quotes = (await axios.get('http://localhost:8081/quotes')).data;
+        this.setState({
+            quotes
+        });
     }
 
     handleSubmit(e) {
