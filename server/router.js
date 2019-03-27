@@ -23,7 +23,7 @@ router
         res.json(Quotes.getQuotes());
     })
     .delete("/quotes/:id", (req, res) => {
-        Quotes.removeQuote(req.body);
+        Quotes.removeQuote(req.params.id);
         res.json(Quotes.getQuotes());
     })
     .use((req, res) => {

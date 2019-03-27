@@ -19,5 +19,5 @@ exports.insertQuote = (quote) => {
 }
 
 exports.removeQuote = (quote) => {
-    quotes.filter(q => q._id !== quote._id);
+    quotes.filter(q => q.id !== quote.id);
 }

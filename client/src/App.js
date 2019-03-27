@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 
+const axios = require('axios')
+
 class App extends Component {
     constructor(props) {
         super(props);
@@ -24,6 +26,13 @@ class App extends Component {
         });
     }
 
+    async removeQuote(index) {
+        const quotes = (await axios.delete('http://localhost:8081/quote')).data;
+        this.setState({
+            quotes
+        });
+    }
+
     handleSubmit(e) {
         e.preventDefault();
         if (!this.state.newMessage) return;
@@ -39,10 +48,6 @@ class App extends Component {
         this.setState({[e.target.id]: e.target.value});
     }
 
-    removeQuote(index) {
-        this.setState({quotes: this.state.quotes.filter((q, i) => i !== index)})
-    }
-
     render() {
         if (!this.state.quotes) {
             return (<p>loading data....</p>)
@@ -50,7 +55,7 @@ class App extends Component {
         return (
             <div>
                 <ul>
-                    {this.state.quotes.map(q => <Quotation key={q._id} {...q} removeQuote= {()=>removeQuote(q._id)}/>)}
+                    {this.state.quotes.map(q => <Quotation key={q._id} {...q} removeQuote= {()=>this.removeQuote(q._id)}/>)}
                 </ul>
                 <hr/>
                 <Form handleSubmit={e => this.handleSubmit(e)} handleNewQuote={e => this.handleNewQuote(e)}/>
